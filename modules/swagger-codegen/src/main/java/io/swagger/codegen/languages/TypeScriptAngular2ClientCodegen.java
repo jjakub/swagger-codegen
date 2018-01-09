@@ -66,7 +66,7 @@ public class TypeScriptAngular2ClientCodegen extends AbstractTypeScriptClientCod
 
     @Override
     public String getName() {
-        return "typescript-angular";
+        return "typescript-angular2";
     }
 
     @Override
@@ -87,17 +87,6 @@ public class TypeScriptAngular2ClientCodegen extends AbstractTypeScriptClientCod
         supportingFiles.add(new SupportingFile("gitignore", "", ".gitignore"));
         supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
 
-        if(additionalProperties.containsKey(NPM_NAME)) {
-            addNpmPackageGeneration();
-        }
-
-        if(additionalProperties.containsKey(WITH_INTERFACES)) {
-            boolean withInterfaces = Boolean.parseBoolean(additionalProperties.get(WITH_INTERFACES).toString());
-            if (withInterfaces) {
-                apiTemplateFiles.put("apiInterface.mustache", "Interface.ts");
-            }
-        }
-
         // determine NG version
         if (additionalProperties.containsKey(NG_VERSION)) {
             if ("2".equals(additionalProperties.get(NG_VERSION).toString())) {
@@ -113,6 +102,17 @@ public class TypeScriptAngular2ClientCodegen extends AbstractTypeScriptClientCod
             // default to 4
             additionalProperties.put("isNg4x", true);
             setNgVersion("4");
+        }
+
+        if(additionalProperties.containsKey(NPM_NAME)) {
+            addNpmPackageGeneration();
+        }
+
+        if(additionalProperties.containsKey(WITH_INTERFACES)) {
+            boolean withInterfaces = Boolean.parseBoolean(additionalProperties.get(WITH_INTERFACES).toString());
+            if (withInterfaces) {
+                apiTemplateFiles.put("apiInterface.mustache", "Interface.ts");
+            }
         }
     }
 
